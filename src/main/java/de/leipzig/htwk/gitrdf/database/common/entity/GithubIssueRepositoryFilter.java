@@ -22,9 +22,11 @@ public class GithubIssueRepositoryFilter {
             true,
             true,
             true,
+            true,
             true);
 
     public static final GithubIssueRepositoryFilter DISABLED = new GithubIssueRepositoryFilter(
+            false,
             false,
             false,
             false,
@@ -42,6 +44,8 @@ public class GithubIssueRepositoryFilter {
     //private Long id;
 
     private boolean enableIssueId;
+
+    private boolean enableIssueNumber;
 
     private boolean enableIssueState;
 
@@ -65,6 +69,7 @@ public class GithubIssueRepositoryFilter {
 
     public boolean doesContainAtLeastOneEnabledFilterOption() {
         return this.isEnableIssueId()
+                || this.isEnableIssueNumber()
                 || this.isEnableIssueState()
                 || this.isEnableIssueTitle()
                 || this.isEnableIssueBody()
