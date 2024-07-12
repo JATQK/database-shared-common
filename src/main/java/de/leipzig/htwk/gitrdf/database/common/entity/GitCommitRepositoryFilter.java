@@ -25,6 +25,20 @@ public class GitCommitRepositoryFilter {
             true,
             true);
 
+    public static final GitCommitRepositoryFilter DEFAULT = new GitCommitRepositoryFilter(
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            false);
+
     public static final GitCommitRepositoryFilter DISABLED = new GitCommitRepositoryFilter(
             false,
             false,

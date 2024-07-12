@@ -14,6 +14,9 @@ public class GithubRepositoryFilter {
     public static final GithubRepositoryFilter ENABLED = new GithubRepositoryFilter(
             GitCommitRepositoryFilter.ENABLED, GithubIssueRepositoryFilter.ENABLED);
 
+    public static final GithubRepositoryFilter DEFAULT = new GithubRepositoryFilter(
+            GitCommitRepositoryFilter.DEFAULT, GithubIssueRepositoryFilter.ENABLED);
+
     public static final GithubRepositoryFilter DISABLED = new GithubRepositoryFilter(
             GitCommitRepositoryFilter.DISABLED, GithubIssueRepositoryFilter.DISABLED);
 
