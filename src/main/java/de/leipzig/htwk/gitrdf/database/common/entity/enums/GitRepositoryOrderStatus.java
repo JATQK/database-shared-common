@@ -4,6 +4,5 @@ public enum GitRepositoryOrderStatus {
     RECEIVED,
     PROCESSING,
     DONE,
-    FAILED,
-    NOT_FOUND
+    FAILED
 }
