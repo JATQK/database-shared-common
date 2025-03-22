@@ -1,0 +1,57 @@
+:toc:
+:toclevels: 5
+:toc-placement!:
+:source-highlighter: highlight.js
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+:github-repository: https://github.com/git2RDFLab/database-shared-common/
+endif::[]
+
+++++
+<a href="https://github.com/git2RDFLab/"><img align="right" role="right" height="96" src="https://github.com/git2RDFLab/.github/blob/main/profile/images/GitLotus-logo.png?raw=true" style="height: 96px;z-index: 1000000" title="GitLotus" alt="GitLotus"/></a>
+++++
+
+= GitLotus component -- Shared package for handling database operations
+
+This component is required for compiling https://github.com/git2RDFLab/ccr-worker-prototype/[ccr-worker-prototype], https://github.com/git2RDFLab/sparql-query-prototype/[sparql-query-prototype], and https://github.com/git2RDFLab/ccr-listener-prototype/[ccr-listener-prototype].
+
+To remove duplicate database https://spring.io/projects/spring-data-jpa[JPA] definitions, this shared database commons project was introduced, which is used in all projects, that share the mentioned JPA entities and logic.
+
+To make the dependency locally, you have to pull this repository and install the https://maven.apache.org/[Apache Maven] artifact locally, so the dependency is available for other projects.
+
+[source,shell]
+----
+git clone git@github.com:git2RDFLab/database-shared-common.git
+cd database-shared-common
+mvn clean install
+----
+
+The database shared common dependency is already included in https://github.com/git2RDFLab/ccr-worker-prototype/[ccr-worker-prototype], https://github.com/git2RDFLab/sparql-query-prototype/[sparql-query-prototype], and https://github.com/git2RDFLab/ccr-listener-prototype/[ccr-listener-prototype] as a dependency in the pom file:
+
+[source,xml]
+----
+<dependency>
+	<groupId>de.leipzig.htwk.gitrdf.database</groupId>
+	<artifactId>common</artifactId>
+	<version>${de.leipzig.htwk.gitrdf.database.common.version}</version>
+</dependency>
+----
+
+
+== Contribute
+
+We are happy to receive your contributions. 
+Please create a pull request or an issue. 
+As this tool is published under the MIT license, feel free to fork it and use it in your own projects.
+
+== Disclaimer
+
+This tool just temporarily stores the image data. 
+It is provided "as is" and without any warranty, express or implied.
+
+
+
