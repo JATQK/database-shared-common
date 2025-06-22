@@ -1,6 +1,6 @@
 package de.leipzig.htwk.gitrdf.database.common.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,36 +12,36 @@ import lombok.NoArgsConstructor;
 public class GithubIssueRepositoryFilter {
 
         public static final GithubIssueRepositoryFilter ENABLED = new GithubIssueRepositoryFilter(
-                        true,
-                        true,
-                        true,
-                        true,
-                        true,
-                        true,
-                        true,
-                        true,
-                        true,
-                        true,
-                        true,
-                        true,
-                        true,
-                        true);
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true);
 
         public static final GithubIssueRepositoryFilter DISABLED = new GithubIssueRepositoryFilter(
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false);
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false);
 
         // @Id
         // @GeneratedValue(strategy = GenerationType.IDENTITY)
