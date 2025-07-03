@@ -1,7 +1,9 @@
 package de.leipzig.htwk.gitrdf.database.common.entity;
 
 import de.leipzig.htwk.gitrdf.database.common.entity.enums.GitRepositoryOrderStatus;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.*;
+import de.leipzig.htwk.gitrdf.database.common.entity.RepositoryAnalysisEntity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -34,6 +36,9 @@ public class GitRepositoryOrderEntity {
 
     @Column(nullable = false)
     private int numberOfTries;
+
+    @OneToOne(mappedBy = "gitRepositoryOrder", cascade = CascadeType.ALL, orphanRemoval = true)
+    private RepositoryAnalysisEntity analysisEntity;
 
 
 }

@@ -1,6 +1,6 @@
 package de.leipzig.htwk.gitrdf.database.common.entity.lob;
 
-import de.leipzig.htwk.gitrdf.database.common.entity.DatasetAnalysisEntity;
+import de.leipzig.htwk.gitrdf.database.common.entity.LlmRatingRunEntity;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,14 +10,14 @@ import java.sql.Blob;
 @Entity
 @Data
 @NoArgsConstructor
-public class DatasetAnalysisEntityLobs {
+public class LlmRatingRunEntityLobs {
 
     @Id
     private Long id;
 
     @OneToOne
     @MapsId
-    private DatasetAnalysisEntity analysisEntity;
+    private LlmRatingRunEntity ratingRun;
 
     @Lob
     private Blob rdfFile;
