@@ -14,7 +14,9 @@ public class GithubRepositoryOrderEntity {
     public static GithubRepositoryOrderEntity newOrder(
             String ownerName,
             String repositoryName,
-            GithubRepositoryFilter githubRepositoryFilter) {
+            GithubRepositoryFilter githubRepositoryFilter,
+            String datasetUri,
+            Integer analysisRating) {
 
         GithubRepositoryOrderEntity githubRepositoryOrderEntity = new GithubRepositoryOrderEntity();
 
@@ -23,6 +25,8 @@ public class GithubRepositoryOrderEntity {
         githubRepositoryOrderEntity.setNumberOfTries(0);
         githubRepositoryOrderEntity.setStatus(GitRepositoryOrderStatus.RECEIVED);
         githubRepositoryOrderEntity.setGithubRepositoryFilter(githubRepositoryFilter);
+        githubRepositoryOrderEntity.setDatasetUri(datasetUri);
+        githubRepositoryOrderEntity.setAnalysisRating(analysisRating);
 
         return githubRepositoryOrderEntity;
     }
@@ -36,6 +40,12 @@ public class GithubRepositoryOrderEntity {
 
     @Column(nullable = false, length = 255)
     private String repositoryName;
+
+    @Column(length = 2048)
+    private String datasetUri;
+
+    @Column
+    private Integer analysisRating;
 
     @Enumerated(EnumType.STRING)
     private GitRepositoryOrderStatus status;
