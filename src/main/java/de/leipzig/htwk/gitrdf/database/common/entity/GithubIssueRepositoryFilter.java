@@ -25,9 +25,13 @@ public class GithubIssueRepositoryFilter {
         true,
         true,
         true,
+        true,
+        true,
         true);
 
         public static final GithubIssueRepositoryFilter DISABLED = new GithubIssueRepositoryFilter(
+        false,
+        false,
         false,
         false,
         false,
@@ -75,6 +79,11 @@ public class GithubIssueRepositoryFilter {
 
         private boolean enableIssueMergedBy;
 
+        private boolean enableIssueMergedInfo;
+
+        private boolean enableIssueComments;
+        
+
         public boolean doesContainAtLeastOneEnabledFilterOption() {
                 return this.isEnableIssueId()
                                 || this.isEnableIssueNumber()
@@ -89,6 +98,8 @@ public class GithubIssueRepositoryFilter {
                                 || this.isEnableIssueUpdatedAt()
                                 || this.isEnableIssueClosedAt()
                                 || this.isEnableIssueReviewers()
-                                || this.isEnableIssueMergedBy();
+                                || this.isEnableIssueMergedBy()
+                                || this.isEnableIssueMergedInfo()
+                                || this.isEnableIssueComments();
         }
 }
