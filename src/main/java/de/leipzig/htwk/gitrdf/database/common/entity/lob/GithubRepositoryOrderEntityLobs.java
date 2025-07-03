@@ -21,4 +21,7 @@ public class GithubRepositoryOrderEntityLobs {
 
     @Lob
     private Blob rdfFile;
+
+    @Lob
+    private Blob analysisRdfFile;
 }

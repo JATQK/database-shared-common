@@ -9,4 +9,6 @@ import java.util.List;
 public interface GithubRepositoryOrderRepository extends JpaRepository<GithubRepositoryOrderEntity, Long> {
 
     List<GithubRepositoryOrderEntity> findAllByStatus(GitRepositoryOrderStatus status);
+
+    List<GithubRepositoryOrderEntity> findAllByDatasetUri(String datasetUri);
 }
