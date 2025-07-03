@@ -41,8 +41,8 @@ The database shared common dependency is already included in https://github.com/
 </dependency>
 ----
 
-== Dataset analysis
-The `DatasetAnalysisEntity` stores evaluated datasets including the dataset URI, the timestamp of the analysis and its status. Ratings can be saved numerically or as free text. The corresponding RDF result is kept as a blob in `DatasetAnalysisEntityLobs` and can be accessed through `DatasetAnalysisRepository`.
+== Repository analysis
+Each `GitRepositoryOrderEntity` can be linked to a `RepositoryAnalysisEntity` capturing the analysis metadata and the results of multiple LLM rating runs. A single analysis may hold aggregated ratings (`ratingNumber` or `ratingText`) and maintains several `LlmRatingRunEntity` objects. Each run stores its RDF output in the associated `LlmRatingRunEntityLobs` entry.
 
 
 == Contribute
