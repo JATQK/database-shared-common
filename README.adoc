@@ -41,6 +41,9 @@ The database shared common dependency is already included in https://github.com/
 </dependency>
 ----
 
+== Dataset analysis
+The `DatasetAnalysisEntity` stores evaluated datasets including the dataset URI, the timestamp of the analysis and its status. Ratings can be saved numerically or as free text. The corresponding RDF result is kept as a blob in `DatasetAnalysisEntityLobs` and can be accessed through `DatasetAnalysisRepository`.
+
 
 == Contribute
 
