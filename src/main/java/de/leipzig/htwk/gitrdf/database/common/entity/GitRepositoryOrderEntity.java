@@ -1,9 +1,14 @@
 package de.leipzig.htwk.gitrdf.database.common.entity;
 
 import de.leipzig.htwk.gitrdf.database.common.entity.enums.GitRepositoryOrderStatus;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.*;
-import de.leipzig.htwk.gitrdf.database.common.entity.RepositoryAnalysisEntity;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -36,9 +41,5 @@ public class GitRepositoryOrderEntity {
 
     @Column(nullable = false)
     private int numberOfTries;
-
-    @OneToOne(mappedBy = "gitRepositoryOrder", cascade = CascadeType.ALL, orphanRemoval = true)
-    private RepositoryAnalysisEntity analysisEntity;
-
 
 }

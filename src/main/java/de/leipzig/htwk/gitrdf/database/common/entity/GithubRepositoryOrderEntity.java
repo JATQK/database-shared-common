@@ -1,7 +1,15 @@
 package de.leipzig.htwk.gitrdf.database.common.entity;
 
 import de.leipzig.htwk.gitrdf.database.common.entity.enums.GitRepositoryOrderStatus;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -26,8 +34,6 @@ public class GithubRepositoryOrderEntity {
         githubRepositoryOrderEntity.setStatus(GitRepositoryOrderStatus.RECEIVED);
         githubRepositoryOrderEntity.setGithubRepositoryFilter(githubRepositoryFilter);
         githubRepositoryOrderEntity.setDatasetUri(datasetUri);
-        githubRepositoryOrderEntity.setAnalysisRating(analysisRating);
-
         return githubRepositoryOrderEntity;
     }
 
@@ -44,9 +50,6 @@ public class GithubRepositoryOrderEntity {
     @Column(length = 2048)
     private String datasetUri;
 
-    @Column
-    private Integer analysisRating;
-
     @Enumerated(EnumType.STRING)
     private GitRepositoryOrderStatus status;
 
@@ -55,4 +58,5 @@ public class GithubRepositoryOrderEntity {
 
     @Embedded
     private GithubRepositoryFilter githubRepositoryFilter;
+
 }

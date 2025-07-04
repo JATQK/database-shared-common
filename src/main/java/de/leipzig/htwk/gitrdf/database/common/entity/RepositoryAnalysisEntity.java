@@ -1,13 +1,24 @@
 package de.leipzig.htwk.gitrdf.database.common.entity;
 
-import de.leipzig.htwk.gitrdf.database.common.entity.enums.AnalysisStatus;
-import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import de.leipzig.htwk.gitrdf.database.common.entity.enums.AnalysisStatus;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "repositoryanalysis")
@@ -32,10 +43,10 @@ public class RepositoryAnalysisEntity {
     @Column(length = 1024)
     private String ratingText;
 
-    @OneToOne
-    @JoinColumn(name = "git_repository_order_id")
-    private GitRepositoryOrderEntity gitRepositoryOrder;
-
     @OneToMany(mappedBy = "analysisEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<LlmRatingRunEntity> ratingRuns = new ArrayList<>();
+
+    @OneToOne
+    @JoinColumn(name = "github_repository_order_id")
+    private GithubRepositoryOrderEntity githubRepositoryOrder;
 }

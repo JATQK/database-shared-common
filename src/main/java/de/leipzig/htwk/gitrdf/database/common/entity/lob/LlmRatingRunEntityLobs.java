@@ -1,11 +1,15 @@
 package de.leipzig.htwk.gitrdf.database.common.entity.lob;
 
+import java.sql.Blob;
+
 import de.leipzig.htwk.gitrdf.database.common.entity.LlmRatingRunEntity;
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
+import jakarta.persistence.MapsId;
+import jakarta.persistence.OneToOne;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.sql.Blob;
 
 @Entity
 @Data
@@ -20,5 +24,6 @@ public class LlmRatingRunEntityLobs {
     private LlmRatingRunEntity ratingRun;
 
     @Lob
+    // @Column(columnDefinition = "BLOB")
     private Blob rdfFile;
 }
