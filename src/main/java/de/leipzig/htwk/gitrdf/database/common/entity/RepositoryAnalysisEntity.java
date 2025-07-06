@@ -7,6 +7,7 @@ import java.util.List;
 import de.leipzig.htwk.gitrdf.database.common.entity.enums.AnalysisStatus;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -38,15 +39,55 @@ public class RepositoryAnalysisEntity {
     @Enumerated(EnumType.STRING)
     private AnalysisStatus status;
 
+    // Legacy fields (keep existing structure)
     private Double ratingNumber;
 
     @Column(length = 1024)
     private String ratingText;
 
+    // NEW: Embedded consolidated analysis configuration
+    @Embedded
+    private ConsolidatedAnalysisConfig consolidatedConfig;
+
+    // Existing relationships
     @OneToMany(mappedBy = "analysisEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<LlmRatingRunEntity> ratingRuns = new ArrayList<>();
 
     @OneToOne
     @JoinColumn(name = "github_repository_order_id")
     private GithubRepositoryOrderEntity githubRepositoryOrder;
+
+    // Simple factory method following existing pattern
+    public static RepositoryAnalysisEntity newConsolidatedAnalysis(
+            String datasetUri,
+            ConsolidatedAnalysisConfig config,
+            GithubRepositoryOrderEntity githubOrder) {
+
+        RepositoryAnalysisEntity entity = new RepositoryAnalysisEntity();
+        entity.setDatasetUri(datasetUri);
+        entity.setConsolidatedConfig(config);
+        entity.setAnalysisTimestamp(LocalDateTime.now());
+        entity.setStatus(AnalysisStatus.RUNNING);
+        entity.setGithubRepositoryOrder(githubOrder);
+        return entity;
+    }
+
+    // Simple utility methods
+    public boolean isConsolidatedAnalysis() {
+        return consolidatedConfig != null;
+    }
+
+    public void markCompleted() {
+        this.status = AnalysisStatus.DONE;
+        if (consolidatedConfig != null) {
+            consolidatedConfig.setCompletedAt(LocalDateTime.now());
+        }
+    }
+
+    public void markFailed() {
+        this.status = AnalysisStatus.FAILED;
+        if (consolidatedConfig != null) {
+            consolidatedConfig.setCompletedAt(LocalDateTime.now());
+        }
+    }
 }
