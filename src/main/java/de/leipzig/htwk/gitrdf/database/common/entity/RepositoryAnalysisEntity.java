@@ -1,6 +1,7 @@
 package de.leipzig.htwk.gitrdf.database.common.entity;
 
 import java.time.LocalDateTime;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +17,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import de.leipzig.htwk.gitrdf.database.common.entity.lob.RepositoryAnalysisEntityLobs;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -46,7 +49,27 @@ public class RepositoryAnalysisEntity {
     @OneToMany(mappedBy = "analysisEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<LlmRatingRunEntity> ratingRuns = new ArrayList<>();
 
-    @OneToOne
+    @OneToOne(mappedBy = "analysisEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    private RepositoryAnalysisEntityLobs lobs;
+
+    @ManyToOne
     @JoinColumn(name = "github_repository_order_id")
     private GithubRepositoryOrderEntity githubRepositoryOrder;
+
+    @Column(length = 255)
+    private String modelName;
+
+    private BigDecimal temperature;
+
+    @Column(length = 255)
+    private String experimentName;
+
+    public static RepositoryAnalysisEntity newAnalysis(GithubRepositoryOrderEntity order) {
+        RepositoryAnalysisEntity entity = new RepositoryAnalysisEntity();
+        entity.setGithubRepositoryOrder(order);
+        entity.setDatasetUri(order != null ? order.getDatasetUri() : null);
+        entity.setStatus(AnalysisStatus.PENDING);
+        entity.setAnalysisTimestamp(LocalDateTime.now());
+        return entity;
+    }
 }
