@@ -42,7 +42,7 @@ The database shared common dependency is already included in https://github.com/
 ----
 
 == Repository analysis
-Each `GitRepositoryOrderEntity` can be linked to a `RepositoryAnalysisEntity` capturing the analysis metadata and the results of multiple LLM rating runs. A single analysis may hold aggregated ratings (`ratingNumber` or `ratingText`) and maintains several `LlmRatingRunEntity` objects. Each run stores its RDF output in the associated `LlmRatingRunEntityLobs` entry.
+Each `GithubRepositoryOrderEntity` can be linked to multiple `RepositoryAnalysisEntity` objects.  An analysis stores optional parameters such as `modelName`, `temperature`, and `experimentName` and may hold aggregated ratings (`ratingNumber` or `ratingText`).  Every analysis keeps several `LlmRatingRunEntity` objects, each persisting its RDF output in the associated `LlmRatingRunEntityLobs` entry.  The aggregated RDF of an analysis is stored via `RepositoryAnalysisEntityLobs`.
 
 
 == Contribute
