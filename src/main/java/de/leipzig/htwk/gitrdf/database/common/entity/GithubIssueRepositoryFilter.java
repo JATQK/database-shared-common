@@ -25,7 +25,7 @@ public class GithubIssueRepositoryFilter {
         true,
         true,
         true,
-        true,
+        true, 
         true,
         true);
 
@@ -86,20 +86,20 @@ public class GithubIssueRepositoryFilter {
 
         public boolean doesContainAtLeastOneEnabledFilterOption() {
                 return this.isEnableIssueId()
-                                || this.isEnableIssueNumber()
-                                || this.isEnableIssueState()
-                                || this.isEnableIssueTitle()
-                                || this.isEnableIssueBody()
-                                || this.isEnableIssueUser()
-                                || this.isEnableIssueLabels()
-                                || this.isEnableIssueAssignees()
-                                || this.isEnableIssueMilestone()
-                                || this.isEnableIssueCreatedAt()
-                                || this.isEnableIssueUpdatedAt()
-                                || this.isEnableIssueClosedAt()
-                                || this.isEnableIssueReviewers()
-                                || this.isEnableIssueMergedBy()
-                                || this.isEnableIssueMergedInfo()
-                                || this.isEnableIssueComments();
+                || this.isEnableIssueNumber()
+                || this.isEnableIssueState()
+                || this.isEnableIssueTitle()
+                || this.isEnableIssueBody()
+                || this.isEnableIssueUser()
+                || this.isEnableIssueLabels()
+                || this.isEnableIssueAssignees()
+                || this.isEnableIssueMilestone()
+                || this.isEnableIssueCreatedAt()
+                || this.isEnableIssueUpdatedAt()
+                || this.isEnableIssueClosedAt()
+                || this.isEnableIssueReviewers()
+                || this.isEnableIssueMergedBy()
+                || this.isEnableIssueMergedInfo()
+                || this.isEnableIssueComments();
         }
 }
