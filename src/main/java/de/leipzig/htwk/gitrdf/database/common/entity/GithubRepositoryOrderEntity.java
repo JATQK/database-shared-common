@@ -10,6 +10,12 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.FetchType;
+import de.leipzig.htwk.gitrdf.database.common.entity.GithubRepositoryOrderRatingEntity;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -52,5 +58,18 @@ public class GithubRepositoryOrderEntity {
 
     @Embedded
     private GithubRepositoryFilter githubRepositoryFilter;
+
+    @OneToMany(mappedBy = "githubRepositoryOrder", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<GithubRepositoryOrderRatingEntity> ratings = new ArrayList<>();
+
+    public void addRating(GithubRepositoryOrderRatingEntity rating) {
+        ratings.add(rating);
+        rating.setGithubRepositoryOrder(this);
+    }
+
+    public void removeRating(GithubRepositoryOrderRatingEntity rating) {
+        ratings.remove(rating);
+        rating.setGithubRepositoryOrder(null);
+    }
 
 }
