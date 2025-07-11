@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -79,6 +80,9 @@ public class RepositoryAnalysisEntity {
   @OneToMany(mappedBy = "repositoryAnalysis", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   private List<LlmRatingRunEntity> llmRatingRuns = new ArrayList<>();
 
+  @OneToMany(mappedBy = "repositoryAnalysis", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  private List<RepositoryRatingEntity> ratings = new ArrayList<>();
+
   @PreUpdate
   public void preUpdate() {
     this.updatedAt = LocalDateTime.now();
@@ -90,9 +94,19 @@ public class RepositoryAnalysisEntity {
     llmRatingRun.setRepositoryAnalysis(this);
   }
 
+  public void addRating(RepositoryRatingEntity rating) {
+    ratings.add(rating);
+    rating.setRepositoryAnalysis(this);
+  }
+
   public void removeLlmRatingRun(LlmRatingRunEntity llmRatingRun) {
     llmRatingRuns.remove(llmRatingRun);
     llmRatingRun.setRepositoryAnalysis(null);
+  }
+
+  public void removeRating(RepositoryRatingEntity rating) {
+    ratings.remove(rating);
+    rating.setRepositoryAnalysis(null);
   }
 
   // Constructor with all analysis parameters
