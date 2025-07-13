@@ -23,22 +23,19 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class GithubRepositoryOrderRatingEntity {
 
-  public static GithubRepositoryOrderRatingEntity newRating(
+  public GithubRepositoryOrderRatingEntity(
       GithubRepositoryOrderEntity githubRepositoryOrder,
       String metricId,
       String metricName,
+      Integer metricVersion, // Added parameter
       GithubRatingFilter githubRatingFilter) {
 
-    GithubRepositoryOrderRatingEntity githubRepositoryOrderRatingEntity = new GithubRepositoryOrderRatingEntity();
-
-    githubRepositoryOrderRatingEntity.setGithubRepositoryOrder(githubRepositoryOrder);
-    githubRepositoryOrderRatingEntity.setMetricId(metricId);
-    githubRepositoryOrderRatingEntity.setMetricName(metricName);
-    githubRepositoryOrderRatingEntity.setMetricVersion(1);
-    githubRepositoryOrderRatingEntity.setGithubRatingFilter(githubRatingFilter);
-    githubRepositoryOrderRatingEntity.setCreatedAt(LocalDateTime.now());
-
-    return githubRepositoryOrderRatingEntity;
+    this.githubRepositoryOrder = githubRepositoryOrder;
+    this.metricId = metricId;
+    this.metricName = metricName;
+    this.metricVersion = metricVersion; // Set the version
+    this.githubRatingFilter = githubRatingFilter;
+    this.createdAt = LocalDateTime.now();
   }
 
   @Id

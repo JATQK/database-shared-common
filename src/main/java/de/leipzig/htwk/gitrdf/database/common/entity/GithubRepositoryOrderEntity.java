@@ -39,6 +39,7 @@ public class GithubRepositoryOrderEntity {
         githubRepositoryOrderEntity.setGithubRepositoryFilter(githubRepositoryFilter);
         return githubRepositoryOrderEntity;
     }
+    
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -80,6 +81,21 @@ public class GithubRepositoryOrderEntity {
     public void addRating(GithubRepositoryOrderRatingEntity rating) {
         ratings.add(rating);
         rating.setGithubRepositoryOrder(this);
+    }
+
+    public void addNewRating(String metricId, String metricName, GithubRatingFilter githubRatingFilter) {
+        long nextVersion = this.ratings.stream()
+                .filter(rating -> rating.getMetricId().equals(metricId))
+                .count() + 1;
+
+        GithubRepositoryOrderRatingEntity newRating = new GithubRepositoryOrderRatingEntity(
+                this,
+                metricId,
+                metricName,
+                (int) nextVersion,
+                githubRatingFilter);
+
+        this.addRating(newRating);
     }
 
     public void removeRating(GithubRepositoryOrderRatingEntity rating) {
