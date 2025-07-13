@@ -15,6 +15,7 @@ import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 @Entity
 @Table(name = "github_repository_order_rating")
 @Data
@@ -41,7 +42,11 @@ public class GithubRepositoryOrderRatingEntity {
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "github_repository_order_id", nullable = false)
+  @org.hibernate.annotations.NotFound(action = org.hibernate.annotations.NotFoundAction.IGNORE)
   private GithubRepositoryOrderEntity githubRepositoryOrder;
+  // @ManyToOne(fetch = FetchType.LAZY)
+  // @JoinColumn(name = "github_repository_order_id", nullable = false)
+  // private GithubRepositoryOrderEntity githubRepositoryOrder;
 
   @Column(name = "rating_identifier", nullable = false, length = 255, unique = true)
   private String ratingIdentifier;
