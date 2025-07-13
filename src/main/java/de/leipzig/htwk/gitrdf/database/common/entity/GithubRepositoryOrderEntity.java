@@ -59,18 +59,31 @@ public class GithubRepositoryOrderEntity {
     @Embedded
     private GithubRepositoryFilter githubRepositoryFilter;
 
-
+    // Existing metric ratings relationship
     @OneToMany(mappedBy = "githubRepositoryOrder", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<GithubRepositoryOrderMetricRatingEntity> metricRatings = new ArrayList<>();
+    private List<GithubRepositoryOrderRatingEntity> metricRatings = new ArrayList<>();
 
-    public void addMetricRating(GithubRepositoryOrderMetricRatingEntity metricRating) {
+    // New ratings relationship (RDF blob based)
+    @OneToMany(mappedBy = "githubRepositoryOrder", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<GithubRepositoryOrderRatingEntity> ratings = new ArrayList<>();
+
+    public void addMetricRating(GithubRepositoryOrderRatingEntity metricRating) {
         metricRatings.add(metricRating);
         metricRating.setGithubRepositoryOrder(this);
     }
 
-    public void removeMetricRating(GithubRepositoryOrderMetricRatingEntity metricRating) {
+    public void removeMetricRating(GithubRepositoryOrderRatingEntity metricRating) {
         metricRatings.remove(metricRating);
         metricRating.setGithubRepositoryOrder(null);
     }
 
+    public void addRating(GithubRepositoryOrderRatingEntity rating) {
+        ratings.add(rating);
+        rating.setGithubRepositoryOrder(this);
+    }
+
+    public void removeRating(GithubRepositoryOrderRatingEntity rating) {
+        ratings.remove(rating);
+        rating.setGithubRepositoryOrder(null);
+    }
 }

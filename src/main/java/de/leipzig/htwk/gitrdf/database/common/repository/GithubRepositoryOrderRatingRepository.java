@@ -4,14 +4,16 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import de.leipzig.htwk.gitrdf.database.common.entity.GithubRepositoryOrderEntity;
 import de.leipzig.htwk.gitrdf.database.common.entity.GithubRepositoryOrderRatingEntity;
 
 public interface GithubRepositoryOrderRatingRepository extends JpaRepository<GithubRepositoryOrderRatingEntity, Long> {
 
-    List<GithubRepositoryOrderRatingEntity> findByGithubRepositoryOrder(GithubRepositoryOrderEntity githubRepositoryOrder);
+    List<GithubRepositoryOrderRatingEntity> findAllByGithubRepositoryOrderId(Long githubRepositoryOrderId);
 
-    List<GithubRepositoryOrderRatingEntity> findByGithubRepositoryOrderId(Long githubRepositoryOrderId);
+    List<GithubRepositoryOrderRatingEntity> findAllByMetricId(String metricId);
 
-    GithubRepositoryOrderRatingEntity findByRatingIdentifier(String ratingIdentifier);
+    List<GithubRepositoryOrderRatingEntity> findAllByGithubRepositoryOrderIdAndMetricId(Long githubRepositoryOrderId,
+            String metricId);
+
+    List<GithubRepositoryOrderRatingEntity> findAllByTaskSessionId(String taskSessionId);
 }
