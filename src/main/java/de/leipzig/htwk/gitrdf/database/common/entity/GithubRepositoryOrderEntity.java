@@ -68,6 +68,10 @@ public class GithubRepositoryOrderEntity {
     @OneToMany(mappedBy = "githubRepositoryOrder", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<GithubRepositoryOrderRatingEntity> ratings = new ArrayList<>();
 
+    // Statistics relationship (RDF blob based)
+    @OneToMany(mappedBy = "githubRepositoryOrder", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<GithubRepositoryOrderStatisticEntity> statistics = new ArrayList<>();
+
     public void addMetricRating(GithubRepositoryOrderRatingEntity metricRating) {
         metricRatings.add(metricRating);
         metricRating.setGithubRepositoryOrder(this);
@@ -101,5 +105,29 @@ public class GithubRepositoryOrderEntity {
     public void removeRating(GithubRepositoryOrderRatingEntity rating) {
         ratings.remove(rating);
         rating.setGithubRepositoryOrder(null);
+    }
+
+    public void addStatistic(GithubRepositoryOrderStatisticEntity statistic) {
+        statistics.add(statistic);
+        statistic.setGithubRepositoryOrder(this);
+    }
+
+    public void addNewStatistic(String statisticType, String statisticName) {
+        long nextVersion = this.statistics.stream()
+                .filter(statistic -> statistic.getStatisticType().equals(statisticType))
+                .count() + 1;
+
+        GithubRepositoryOrderStatisticEntity newStatistic = new GithubRepositoryOrderStatisticEntity(
+                this,
+                statisticType,
+                statisticName,
+                (int) nextVersion);
+
+        this.addStatistic(newStatistic);
+    }
+
+    public void removeStatistic(GithubRepositoryOrderStatisticEntity statistic) {
+        statistics.remove(statistic);
+        statistic.setGithubRepositoryOrder(null);
     }
 }
