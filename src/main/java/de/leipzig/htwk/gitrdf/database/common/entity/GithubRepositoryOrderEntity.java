@@ -39,7 +39,6 @@ public class GithubRepositoryOrderEntity {
         githubRepositoryOrderEntity.setGithubRepositoryFilter(githubRepositoryFilter);
         return githubRepositoryOrderEntity;
     }
-    
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
