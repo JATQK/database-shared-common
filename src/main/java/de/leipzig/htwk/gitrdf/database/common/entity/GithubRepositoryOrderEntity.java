@@ -3,6 +3,7 @@ package de.leipzig.htwk.gitrdf.database.common.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.leipzig.htwk.gitrdf.database.common.entity.enums.AnalysisType;
 import de.leipzig.htwk.gitrdf.database.common.entity.enums.GitRepositoryOrderStatus;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -59,74 +60,60 @@ public class GithubRepositoryOrderEntity {
     @Embedded
     private GithubRepositoryFilter githubRepositoryFilter;
 
-    // Existing metric ratings relationship
+    // Unified analysis relationship (replaces ratings and statistics)
     @OneToMany(mappedBy = "githubRepositoryOrder", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<GithubRepositoryOrderRatingEntity> metricRatings = new ArrayList<>();
+    private List<GithubRepositoryOrderAnalysisEntity> analyses = new ArrayList<>();
 
-    // New ratings relationship (RDF blob based)
-    @OneToMany(mappedBy = "githubRepositoryOrder", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<GithubRepositoryOrderRatingEntity> ratings = new ArrayList<>();
-
-    // Statistics relationship (RDF blob based)
-    @OneToMany(mappedBy = "githubRepositoryOrder", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<GithubRepositoryOrderStatisticEntity> statistics = new ArrayList<>();
-
-    public void addMetricRating(GithubRepositoryOrderRatingEntity metricRating) {
-        metricRatings.add(metricRating);
-        metricRating.setGithubRepositoryOrder(this);
+    public void addAnalysis(GithubRepositoryOrderAnalysisEntity analysis) {
+        analyses.add(analysis);
+        analysis.setGithubRepositoryOrder(this);
     }
 
-    public void removeMetricRating(GithubRepositoryOrderRatingEntity metricRating) {
-        metricRatings.remove(metricRating);
-        metricRating.setGithubRepositoryOrder(null);
-    }
-
-    public void addRating(GithubRepositoryOrderRatingEntity rating) {
-        ratings.add(rating);
-        rating.setGithubRepositoryOrder(this);
-    }
-
-    public void addNewRating(String metricId, String metricName, GithubRatingFilter githubRatingFilter) {
-        long nextVersion = this.ratings.stream()
-                .filter(rating -> rating.getMetricId().equals(metricId))
-                .count() + 1;
-
-        GithubRepositoryOrderRatingEntity newRating = new GithubRepositoryOrderRatingEntity(
+    public void addNewAnalysis(String metricId, AnalysisType analysisType) {
+        GithubRepositoryOrderAnalysisEntity newAnalysis = new GithubRepositoryOrderAnalysisEntity(
                 this,
                 metricId,
-                metricName,
-                (int) nextVersion,
-                githubRatingFilter);
+                analysisType);
 
-        this.addRating(newRating);
+        this.addAnalysis(newAnalysis);
     }
 
-    public void removeRating(GithubRepositoryOrderRatingEntity rating) {
-        ratings.remove(rating);
-        rating.setGithubRepositoryOrder(null);
+    public void removeAnalysis(GithubRepositoryOrderAnalysisEntity analysis) {
+        analyses.remove(analysis);
+        analysis.setGithubRepositoryOrder(null);
     }
 
-    public void addStatistic(GithubRepositoryOrderStatisticEntity statistic) {
-        statistics.add(statistic);
-        statistic.setGithubRepositoryOrder(this);
+    // Convenience methods for backward compatibility
+    
+    /**
+     * Add a new rating analysis
+     */
+    public void addNewRating(String metricId) {
+        addNewAnalysis(metricId, AnalysisType.RATING);
     }
 
-    public void addNewStatistic(String statisticType, String statisticName) {
-        long nextVersion = this.statistics.stream()
-                .filter(statistic -> statistic.getStatisticType().equals(statisticType))
-                .count() + 1;
-
-        GithubRepositoryOrderStatisticEntity newStatistic = new GithubRepositoryOrderStatisticEntity(
-                this,
-                statisticType,
-                statisticName,
-                (int) nextVersion);
-
-        this.addStatistic(newStatistic);
+    /**
+     * Add a new statistic analysis
+     */
+    public void addNewStatistic(String metricId) {
+        addNewAnalysis(metricId, AnalysisType.STATISTIC);
     }
 
-    public void removeStatistic(GithubRepositoryOrderStatisticEntity statistic) {
-        statistics.remove(statistic);
-        statistic.setGithubRepositoryOrder(null);
+    /**
+     * Get all rating analyses
+     */
+    public List<GithubRepositoryOrderAnalysisEntity> getRatings() {
+        return analyses.stream()
+                .filter(GithubRepositoryOrderAnalysisEntity::isRating)
+                .toList();
+    }
+
+    /**
+     * Get all statistic analyses
+     */
+    public List<GithubRepositoryOrderAnalysisEntity> getStatistics() {
+        return analyses.stream()
+                .filter(GithubRepositoryOrderAnalysisEntity::isStatistic)
+                .toList();
     }
 }

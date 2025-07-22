@@ -42,13 +42,16 @@ The database shared common dependency is already included in https://github.com/
 ----
 
 == Repository analysis
-Each `GithubRepositoryOrderEntity` can be linked to multiple `RepositoryAnalysisEntity` objects.  An analysis stores optional parameters such as `modelName`, `temperature`, and `experimentName` and may hold aggregated ratings (`ratingNumber` or `ratingText`).  Every analysis keeps several `LlmRatingRunEntity` objects, each persisting its RDF output in the associated `LlmRatingRunEntityLobs` entry.  Individual rating results are saved as `RepositoryRatingEntity` objects, while the aggregated RDF of an analysis is stored via `RepositoryAnalysisEntityLobs`.
+Each `GithubRepositoryOrderEntity` can be linked to multiple `GithubRepositoryOrderAnalysisEntity` objects. The unified analysis entity stores both ratings and statistics using the git2RDFLab Unified Analysis Ontology schema. Each analysis contains:
 
-== Github order ratings
-`GithubRepositoryOrderEntity` can directly store feedback in
-`GithubRepositoryOrderRatingEntity` objects.  Every rating is identified by a
-`ratingIdentifier` (UUID) and may contain a numeric value and text.  Ratings are
-queryable by the task id or by their unique identifier.
+- **Hot data** for fast queries: `metricId`, `category`, `dataType`, `status`, `executionTimestamp`
+- **Cold data** for detailed analysis: Complete RDF blob containing thousands of values from different runs
+- **Metadata**: `metricName`, `metricVersion`, `taskSessionId`, etc.
+
+The analysis entity supports both qualitative ratings (quality assessments, audits) and quantitative statistics (activity metrics, measurements). The RDF blob follows the analysis ontology with `ResultEvent` entities containing measurement results and links to detailed context.
+
+== Unified Analysis Structure
+The new `GithubRepositoryOrderAnalysisEntity` replaces the previous separate `GithubRepositoryOrderRatingEntity` and `GithubRepositoryOrderStatisticEntity` classes. Analysis entries are categorized by type (rating, statistic, audit, quality, activity) and can be queried efficiently using the hot data properties while providing access to detailed RDF analysis data when needed.
 
 
 == Contribute
