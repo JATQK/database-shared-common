@@ -83,6 +83,10 @@ public class GithubRepositoryOrderEntity {
         analysis.setGithubRepositoryOrder(null);
     }
 
+    public void removeAnalysisByType(AnalysisType analysisType) {
+        analyses.removeIf(analysis -> analysis.getAnalysisType() == analysisType);
+    }
+
     // Convenience methods for backward compatibility
     
     /**
